@@ -1,0 +1,72 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "To-Do App - Desktop application for task management",
+  "author": {
+    "name": "Quốc Toàn",
+    "email": "duongquoctoan3101@gmail.com"
+  },
+  "keywords": [
+    "todo",
+    "productivity",
+    "desktop",
+    "electron",
+    "mongodb"
+  ],
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "set NODE_ENV=development && electron .",
+    "rebuild": "npx electron-rebuild",
+    "postinstall": "npm run rebuild",
+    "build-win": "npm run rebuild && electron-builder --win",
+    "build-mac": "npm run rebuild && electron-builder --mac", 
+    "build-linux": "npm run rebuild && electron-builder --linux",
+    "build-all": "npm run rebuild && electron-builder --win --mac --linux",
+    "pack": "npm run rebuild && electron-builder --dir",
+    "dist": "npm run rebuild && electron-builder"
+  },
+  "build": {
+    "appId": "com.toan.todoapp",
+    "productName": "To-Do App",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*",
+      "!dist/**/*",
+      "!build/**/*",
+      "!.git/**/*",
+      "!README.md"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    },
+    "asar": true,
+    "npmRebuild": true
+  },
+  "dependencies": {
+    "mongodb": "^6.18.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.13.3",
+    "electron-rebuild": "^3.2.9"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "license": "MIT"
+}

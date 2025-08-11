@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Desktop App Header -->
+    <div class="app-header">
+        <div class="app-title">To-Do App</div>
+        <div class="window-controls">
+            <button class="window-btn minimize-btn" onclick="minimizeWindow()">−</button>
+            <button class="window-btn maximize-btn" onclick="maximizeWindow()">□</button>
+            <button class="window-btn close-btn" onclick="closeWindow()">×</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Authentication Screen -->
+        <div id="authScreen" class="auth-container">
+            <div class="auth-header">
+                <h1> Đăng nhập</h1>
+                <p>Quản lý công việc cá nhân</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('login')">Đăng nhập</button>
+                <button class="auth-tab" onclick="switchTab('register')">Đăng ký</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mật khẩu</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="auth-btn" id="loginBtn"> Đăng nhập</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="hidden">
+                <div class="form-group">
+                    <label for="registerName">Họ tên</label>
+                    <input type="text" id="registerName" required placeholder="Nguyễn Văn A">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Mật khẩu</label>
+                    <input type="password" id="registerPassword" required placeholder="••••••••" minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Xác nhận mật khẩu</label>
+                    <input type="password" id="confirmPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="auth-btn" id="registerBtn"> Đăng ký</button>
+            </form>
+        </div>
+
+        <!-- Main App Screen -->
+        <div id="appScreen" class="container hidden">
+            <div class="app-navbar">
+                <div class="header">
+                    <h1> TO-DO LIST </h1>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress"></div>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <div class="avatar" id="userAvatar">A</div>
+                    <div>
+                        <div id="userName">User</div>
+                        <div style="font-size: 12px; color: #6c757d;" id="userEmail">user@email.com</div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Đăng xuất</button>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalTasks">0</div>
+                    <div class="stat-label">Tổng công việc</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="completedTasks">0</div>
+                    <div class="stat-label">Đã hoàn thành</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="pendingTasks">0</div>
+                    <div class="stat-label">Đang chờ</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="todayTasks">0</div>
+                    <div class="stat-label">Hôm nay</div>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <div class="input-group">
+                    <input type="text" id="taskInput" placeholder=" Thêm công việc mới..." maxlength="200">
+                </div>
+                <select class="priority-select" id="prioritySelect">
+                    <option style="color:green;" value="low">&#xF287; Thấp</option>
+                    <option style="color:orange;" value="medium" selected>&#xF582; Trung bình</option>
+                    <option style="color:red" value="high">&#xF5E3; Cao</option>
+                </select>
+                <select class="category-select" id="categorySelect">
+                    <option value="personal">&#xF4D7; Cá nhân </option>
+                    <option value="work">&#xF172; Công việc</option>
+                    <option value="health">&#xF415; Sức khỏe</option>
+                    <option value="study">&#xF43D; Học tập</option>
+                    <option value="other">&#xF4EA; Khác</option>
+                </select>
+                <button class="add-btn" onclick="addTask()">Thêm</button>
+            </div>
+
+            <input type="text" class="search-box" id="searchInput" placeholder="&#xF52A; Tìm kiếm công việc...">
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Tất cả</button>
+                <button class="filter-btn" data-filter="pending">Chưa xong</button>
+                <button class="filter-btn" data-filter="completed">Đã xong</button>
+                <button class="filter-btn" data-filter="today">Hôm nay</button>
+                <button class="filter-btn" data-filter="high">Ưu tiên cao</button>
+                <button class="filter-btn" data-filter="work">Công việc</button>
+                <button class="filter-btn" data-filter="personal">Cá nhân</button>
+            </div>
+
+            <div class="task-list" id="taskList">
+                <div class="empty-state">
+                    <h3>Chưa có công việc nào</h3>
+                    <p>Hãy thêm công việc đầu tiên của bạn!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Task -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <h2>&#xF4CA; Chỉnh sửa công việc</h2>
+            <div class="form-group">
+                <label>Tên công việc</label>
+                <input type="text" id="editTaskInput" placeholder="Tên công việc...">
+            </div>
+            <div class="form-group">
+                <label>Độ ưu tiên</label>
+                <select id="editPrioritySelect">
+                    <option value="low">&#xF287; Ưu tiên thấp</option>
+                    <option value="medium">&#xF582; Ưu tiên trung bình</option>
+                    <option value="high">&#xF5E3; Ưu tiên cao</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Danh mục</label>
+                <select id="editCategorySelect">
+                    <option value="personal">&#xF4D7; Cá nhân</option>
+                    <option value="work">&#xF172; Công việc</option>
+                    <option value="health">&#xF415; Sức khỏe</option>
+                    <option value="study">&#xF43D; Học tập</option>
+                    <option value="other">&#xF4EA; Khác</option>
+                </select>
+            </div>
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <button class="auth-btn" onclick="saveEditTask()">Lưu</button>
+                <button class="filter-btn" onclick="closeEditModal()" style="flex: 1;">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
