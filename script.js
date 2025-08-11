@@ -110,6 +110,7 @@ function switchTab(tab) {
     document.getElementById('loginForm').classList.remove('hidden');
     document.getElementById('registerForm').classList.add('hidden');
   } else {
+    document.body.style.overflow = 'hidden';
     document.getElementById('loginForm').classList.add('hidden');
     document.getElementById('registerForm').classList.remove('hidden');
   }

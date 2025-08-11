@@ -1,7 +1,7 @@
 {
   "name": "todo-app",
   "version": "1.0.0",
-  "description": "To-Do App - Desktop application for task management",
+  "description": "To-Do App",
   "author": {
     "name": "Quốc Toàn",
     "email": "duongquoctoan3101@gmail.com"
@@ -20,7 +20,7 @@
     "rebuild": "npx electron-rebuild",
     "postinstall": "npm run rebuild",
     "build-win": "npm run rebuild && electron-builder --win",
-    "build-mac": "npm run rebuild && electron-builder --mac", 
+    "build-mac": "npm run rebuild && electron-builder --mac",
     "build-linux": "npm run rebuild && electron-builder --linux",
     "build-all": "npm run rebuild && electron-builder --win --mac --linux",
     "pack": "npm run rebuild && electron-builder --dir",
@@ -33,25 +33,17 @@
       "output": "dist",
       "buildResources": "build"
     },
-    "files": [
-      "**/*",
-      "!node_modules/**/*",
-      "!dist/**/*",
-      "!build/**/*",
-      "!.git/**/*",
-      "!README.md"
-    ],
     "win": {
       "target": "nsis",
-      "icon": "assets/icon.ico"
+      "icon": "icon.ico"
     },
     "mac": {
       "target": "dmg",
-      "icon": "assets/icon.icns"
+      "icon": "icon.icns"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "assets/icon.png"
+      "icon": "icon.png"
     },
     "asar": true,
     "npmRebuild": true
