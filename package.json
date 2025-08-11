@@ -33,14 +33,6 @@
       "output": "dist",
       "buildResources": "build"
     },
-    "files": [
-      "**/*",
-      "!node_modules/**/*",
-      "!dist/**/*",
-      "!build/**/*",
-      "!.git/**/*",
-      "!README.md"
-    ],
     "win": {
       "target": "nsis",
       "icon": "assets/icon.ico"
